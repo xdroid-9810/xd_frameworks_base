@@ -2060,12 +2060,6 @@ public class StatusBar extends SystemUI implements
         }
     }
 
-    public void setBlockedGesturalNavigation(boolean blocked) {
-        if (getNavigationBarView() != null) {
-            getNavigationBarView().setBlockedGesturalNavigation(blocked);
-        }
-    }
-
     void makeExpandedVisible(boolean force) {
         if (SPEW) Log.d(TAG, "Make expanded visible: expanded visible=" + mExpandedVisible);
         if (!force && (mExpandedVisible || !mCommandQueue.panelsEnabled())) {
@@ -4477,7 +4471,9 @@ public class StatusBar extends SystemUI implements
                 Log.d(TAG, String.format("User setup changed: userSetup=%s mUserSetup=%s",
                         userSetup, mUserSetup));
             }
-
+            if (mNotificationPanelViewController != null) {
+                mNotificationPanelViewController.setUserSetupComplete(userSetup);
+            }
             if (userSetup != mUserSetup) {
                 mUserSetup = userSetup;
                 if (!mUserSetup && mStatusBarView != null) {
